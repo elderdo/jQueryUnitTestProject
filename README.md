@@ -121,6 +121,64 @@ Run tests in watch mode:
 npm test -- --watch
 ```
 
+## Dashboard Test + jQuery-to-HTML Wiring (Beginner)
+
+### How to run your dashboard Jest test
+
+1. From the project root, run:
+
+   ```bash
+   npm test -- src/dashboard.test.js --watchAll=false
+   ```
+
+2. To run all tests:
+
+   ```bash
+   npm test
+   ```
+
+3. To keep tests re-running while you edit:
+
+   ```bash
+   npm test -- --watch
+   ```
+
+### Where this is defined
+
+1. Test script is in `package.json`.
+2. Test file is `src/dashboard.test.js`.
+3. Module under test is `src/dashboard.js`.
+
+### How jQuery modules are packaged and tied to HTML pages
+
+In this project:
+
+1. For tests, Jest uses CommonJS style import/export:
+   - `require(...)` in `src/dashboard.test.js`
+   - `module.exports` in `src/dashboard.js`
+2. For the browser page, the same module behaves as a global object.
+3. When the page loads, `$(document).ready(...)` calls `UserDashboard.init()`.
+
+Beginner mental model:
+
+1. HTML provides elements like `save-profile-btn` and `status-text`.
+2. jQuery finds those elements with selectors.
+3. Your module attaches behavior to them.
+4. Clicking the button runs logic, then updates the page.
+
+Typical HTML wiring pattern:
+
+1. Load jQuery first.
+2. Load your dashboard script second.
+3. Ensure the page has matching IDs used in selectors.
+4. Let document ready initialize everything.
+
+Minimal order example:
+
+1. Include a script tag for jQuery.
+2. Include a script tag for `dashboard.js`.
+3. HTML contains `id="save-profile-btn"` and `id="status-text"`.
+
 ## Debug Tests in VS Code
 
 This repo already includes a debug profile at `.vscode/launch.json` named **Debug Jest Tests**.
