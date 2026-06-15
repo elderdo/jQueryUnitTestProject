@@ -211,3 +211,5 @@ If tests fail unexpectedly:
 2. Confirm `src/dashboard.js` exports `UserDashboard` for Jest.
 3. Confirm test file includes `@jest-environment jsdom`.
 4. Run `npm test` from the project root folder.
+
+Test to validate actions
