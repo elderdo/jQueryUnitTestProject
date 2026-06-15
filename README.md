@@ -139,6 +139,55 @@ The launch profile runs Jest with:
 - `--runInBand` (single process, easier to debug)
 - `--env=jsdom` (browser-like DOM environment)
 
+## GitHub Actions (Beginner Guide)
+
+This project uses **two** workflow files so the pipeline is easy to understand:
+
+- [PR checks workflow](.github/workflows/pr-checks.yml): runs tests for pull requests into `main`.
+- [Production deploy workflow](.github/workflows/deploy-production.yml): runs on push to `main`, then runs the deploy stage only if tests pass.
+
+### Why split into two files?
+
+- Pull request workflow focuses only on code quality checks.
+- Production workflow focuses on release/deploy flow.
+- Keeping them separate makes each file shorter and easier for beginners to follow.
+
+### What happens in each workflow?
+
+1. Check out the repository code.
+2. Install Node.js.
+3. Install dependencies with `npm ci`.
+4. Run tests with `npm test -- --watchAll=false`.
+5. In production workflow only: run deploy stage if tests pass.
+
+### Where do I add real deployment commands?
+
+Edit the placeholder deploy step in [deploy workflow](.github/workflows/deploy-production.yml) and replace the `echo` lines with your real deploy commands.
+
+### How do I make this required before merge?
+
+In GitHub branch protection rules for `main`, require the PR test workflow status check to pass before merging.
+
+### First PR Walkthrough (Beginner Checklist)
+
+1. Create a new branch locally:
+   - `git checkout -b my-first-change`
+2. Make your code change and run tests locally:
+   - `npm test -- --watchAll=false`
+3. Commit and push your branch:
+   - `git add .`
+   - `git commit -m "Describe your change"`
+   - `git push -u origin my-first-change`
+4. Open GitHub and create a Pull Request into `main`.
+5. In the PR page, open the Checks tab and wait for [PR checks workflow](.github/workflows/pr-checks.yml) to finish.
+6. If checks fail:
+   - Open the failed job log in GitHub Actions.
+   - Fix the issue locally.
+   - Re-run `npm test -- --watchAll=false`.
+   - Commit and push again (the PR checks rerun automatically).
+7. When checks pass and review is complete, merge the PR.
+8. After merge, confirm [Production deploy workflow](.github/workflows/deploy-production.yml) runs on `main`.
+
 ## Why jsdom Matters
 
 jQuery manipulates the DOM. In normal Node.js there is no browser DOM, so tests would fail.

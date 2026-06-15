@@ -1,4 +1,6 @@
 /**
+ * @jest-environment jsdom
+ *
  * JEST NAMING CONVENTIONS & TEST FILE STRUCTURE
  * 
  * File Naming:
@@ -15,10 +17,6 @@
  * Running Tests:
  * - npm test          → Runs all test files matching *.test.js
  * - npm test -- --watch → Re-runs tests automatically when files change
- */
-
-/**
- * @jest-environment jsdom
  */
 // The comment above is a magic flag telling Jest to load a virtual browser window (jsdom)
 
