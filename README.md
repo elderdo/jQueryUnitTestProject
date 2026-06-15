@@ -143,6 +143,16 @@ npm test -- --watch
    npm test -- --watch
    ```
 
+### How to debug the dashboard test in VS Code
+
+1. Open `src/dashboard.test.js`.
+2. Put a breakpoint on the test line you want to inspect.
+3. Open the Run and Debug panel in VS Code.
+4. Choose **Debug Jest Tests**.
+5. Press **F5** to start the debugger.
+6. Use **F10** to step over code and **F11** to step into code.
+7. Watch variables, the call stack, and the test result as the debugger pauses.
+
 ### Where this is defined
 
 1. Test script is in `package.json`.
